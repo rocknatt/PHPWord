@@ -34,9 +34,11 @@ class ListItemRun extends TextRun
         if (!$this->element instanceof \PhpOffice\PhpWord\Element\ListItemRun) {
             return '';
         }
-
+var_dump($this->element);
         $writer = new Container($this->parentWriter, $this->element);
-        $content = $writer->write() . PHP_EOL;
+        $content = '<ul>';
+        $content .= $writer->write();
+        $content .= '</ul>';
 
         return $content;
     }
