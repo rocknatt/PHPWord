@@ -34,12 +34,20 @@ class ListItemRun extends TextRun
         if (!$this->element instanceof \PhpOffice\PhpWord\Element\ListItemRun) {
             return '';
         }
-        
         $writer = new Container($this->parentWriter, $this->element);
-        $content = '<ul>';
-        $content .= $writer->write();
-        $content .= '</ul>';
+        $depth = \intval($this->element->getDepth());
+        $content = '';
+        for ($i=0; $i < $depth + 1; $i++) { 
+            $content .= '<ul style="'. ($i < $depth ? 'list-style-type: none;' : '') .'">';
+                $content .= '<li>';
+        }
+            $content .= $writer->write();
 
+        for ($i=0; $i < $depth + 1; $i++) { 
+                $content .= '</li>';
+            $content .= '</ul>';
+        }
+        
         return $content;
     }
 }
