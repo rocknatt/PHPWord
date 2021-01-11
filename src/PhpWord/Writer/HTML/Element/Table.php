@@ -52,6 +52,9 @@ class Table extends AbstractElement
                 for ($j = 0; $j < $rowCellCount; $j++) {
                     $cellStyle = $rowCells[$j]->getStyle();
                     $cellBgColor = $cellStyle->getBgColor();
+                    $cellBorderStyle = $cellStyle->getBorderStyle();
+                    $cellBorderColor =$cellStyle->getBorderColor();
+                    $cellBorderSize = $cellStyle->getBorderSize();
                     $cellFgColor = null;
                     if ($cellBgColor) {
                         $red = hexdec(substr($cellBgColor, 0, 2));
@@ -84,7 +87,7 @@ class Table extends AbstractElement
                         $cellRowSpanAttr = ($cellRowSpan > 1 ? " rowspan=\"{$cellRowSpan}\"" : '');
                         $cellBgColorAttr = (is_null($cellBgColor) ? '' : " bgcolor=\"#{$cellBgColor}\"");
                         $cellFgColorAttr = (is_null($cellFgColor) ? '' : " color=\"#{$cellFgColor}\"");
-                        $content .= "<{$cellTag}{$cellColSpanAttr}{$cellRowSpanAttr}{$cellBgColorAttr}{$cellFgColorAttr}>" . PHP_EOL;
+                        $content .= "<{$cellTag}{$cellColSpanAttr}{$cellRowSpanAttr}{$cellBgColorAttr}{$cellFgColorAttr} style=\"border: none;\">" . PHP_EOL;
                         $writer = new Container($this->parentWriter, $rowCells[$j]);
                         $content .= $writer->write();
                         if ($cellRowSpan > 1) {
@@ -126,7 +129,7 @@ class Table extends AbstractElement
             return '';
         }
         if (is_string($tableStyle)) {
-            $style = ' class="' . $tableStyle;
+            $style = ' class="' . $tableStyle . '" style="border: none;';
         } else {
             $style = ' style="';
             if ($tableStyle->getLayout() == \PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED) {
